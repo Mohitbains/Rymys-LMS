@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Rymys LMS",
-    "slug": "Rymys LMS",
+    "slug": "rymys-lms",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
