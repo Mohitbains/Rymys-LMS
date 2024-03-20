@@ -1,20 +1,75 @@
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow
+ */
+
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { WebView } from 'react-native-webview';
+import {
+  BackHandler,
+  Platform,
+  ActivityIndicator,
+  AppRegistry,
+} from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  webView = {
+    canGoBack: false,
+    ref: null,
+  };
+  /** For Loading And Back Button Press**/
+  onAndroidBackPress = () => {
+    if (this.webView.canGoBack && this.webView.ref) {
+      this.webView.ref.goBack();
+      return true;
+    }
+    return false;
+  };
+
+  componentDidMount() {
+    if (Platform.OS === 'android') {
+      BackHandler.addEventListener(
+        'hardwareBackPress',
+        this.onAndroidBackPress,
+      );
+    }
+  }
+
+  _onRefresh = () => {
+    this.setState({ refreshing: true });
+    this.webView.ref.reload();
+    this.setState({ refreshing: false });
+  };
+  /** For Loading And Back Button Press**/
+  render() {
+    return (
+      <>
+        <StatusBar backgroundColor='#2888a1' />
+        <WebView
+          ref={(webView) => {
+            this.webView.ref = webView;
+          }}
+          onNavigationStateChange={(navState) => {
+            this.webView.canGoBack = navState.canGoBack;
+          }}
+          source={{ uri: 'https://canvas.rymys.com' }}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
+          cacheEnabled={true}
+          thirdPartyCookiesEnabled={true}
+          sharedCookiesEnabled={true}
+          pullToRefreshEnabled={true}
+          style={{ marginTop: 30 }}
+        />
+      </>
+    );
+  }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+AppRegistry.registerComponent('App', () => App);
