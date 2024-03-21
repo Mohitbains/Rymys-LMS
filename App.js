@@ -50,15 +50,17 @@ export default class App extends React.Component {
   };
   /** For Loading And Back Button Press**/
   render() {
-    let jsCode = `
+    const jsCode = `
     var cookie={};
     document.cookie.split('; ').forEach(function(i){cookie[i.split('=')[0]]=i.split('=')[1]});
     document.querySelector('#pseudonym_session_unique_id').value=cookie['pseudonym_session[unique_id]'] || '';
     document.querySelector('#pseudonym_session_password').value=cookie['pseudonym_session[password]'] || '';
-    document.querySelector('#login button').onclick = function(){
+    document.querySelector('.Button--login').onclick = function(){
         document.cookie = 'pseudonym_session[unique_id]='+document.querySelector('#pseudonym_session_unique_id').value;
         document.cookie = 'pseudonym_session[password]='+document.querySelector('#pseudonym_session_password').value;
+        window.alert({ducument.cookie});
     };
+
 `;
 
     return (
