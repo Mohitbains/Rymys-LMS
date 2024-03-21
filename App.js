@@ -50,6 +50,17 @@ export default class App extends React.Component {
   };
   /** For Loading And Back Button Press**/
   render() {
+    let jsCode = `
+    var cookie={};
+    document.cookie.split('; ').forEach(function(i){cookie[i.split('=')[0]]=i.split('=')[1]});
+    document.querySelector('#pseudonym_session_unique_id').value=cookie['pseudonym_session[unique_id]'] || '';
+    document.querySelector('#pseudonym_session_password').value=cookie['pseudonym_session[password]'] || '';
+    document.querySelector('#login button').onclick = function(){
+        document.cookie = 'pseudonym_session[unique_id]='+document.querySelector('#pseudonym_session_unique_id').value;
+        document.cookie = 'pseudonym_session[password]='+document.querySelector('#pseudonym_session_password').value;
+    };
+`;
+
     return (
       <>
         <StatusBar backgroundColor='#2888a1' />
@@ -61,6 +72,7 @@ export default class App extends React.Component {
             this.webView.canGoBack = navState.canGoBack;
           }}
           source={{ uri: 'https://canvas.rymys.com' }}
+          injectedJavaScript={jsCode}
           javaScriptEnabled={true}
           domStorageEnabled={true}
           cacheEnabled={true}
