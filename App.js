@@ -25,6 +25,7 @@ export default class App extends React.Component {
     ref: null,
   };
   /** For Loading And Back Button Press**/
+
   onAndroidBackPress = () => {
     if (this.webView.canGoBack && this.webView.ref) {
       this.webView.ref.goBack();
