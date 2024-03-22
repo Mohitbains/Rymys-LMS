@@ -73,7 +73,7 @@ export default class App extends React.Component {
           onNavigationStateChange={(navState) => {
             this.webView.canGoBack = navState.canGoBack;
           }}
-          source={{ uri: 'https://canvas.rymys.com' }}
+          source={{ uri: 'https://canvas.rymys.com/login/canvas' }}
           injectedJavaScript={jsCode}
           javaScriptEnabled={true}
           domStorageEnabled={true}
