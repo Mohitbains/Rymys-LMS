@@ -9,6 +9,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { WebView } from 'react-native-webview';
+
 import {
   BackHandler,
   Platform,
@@ -50,17 +51,15 @@ export default class App extends React.Component {
   };
   /** For Loading And Back Button Press**/
   render() {
-    const jsCode = `
+    let jsCode = `
     var cookie={};
     document.cookie.split('; ').forEach(function(i){cookie[i.split('=')[0]]=i.split('=')[1]});
-    document.querySelector('#pseudonym_session_unique_id').value=cookie['pseudonym_session[unique_id]'] || '';
-    document.querySelector('#pseudonym_session_password').value=cookie['pseudonym_session[password]'] || '';
-    document.querySelector('.Button--login').onclick = function(){
-        document.cookie = 'pseudonym_session[unique_id]='+document.querySelector('#pseudonym_session_unique_id').value;
-        document.cookie = 'pseudonym_session[password]='+document.querySelector('#pseudonym_session_password').value;
-        window.alert({ducument.cookie});
+    document.querySelector('#username').value=cookie['username'] || '';
+    document.querySelector('#password').value=cookie['password'] || '';
+    document.querySelector('.Button Button--primary').onclick = function(){
+        document.cookie = 'username='+document.querySelector('#username').value;
+        document.cookie = 'password='+document.querySelector('#password').value;
     };
-
 `;
 
     return (
@@ -73,9 +72,11 @@ export default class App extends React.Component {
           onNavigationStateChange={(navState) => {
             this.webView.canGoBack = navState.canGoBack;
           }}
-          source={{ uri: 'https://canvas.rymys.com/login/canvas' }}
-          injectedJavaScript={jsCode}
+          source={{
+            uri: 'https://canvas.rymys.com/',
+          }}
           javaScriptEnabled={true}
+          injectedJavaScript={jsCode}
           domStorageEnabled={true}
           cacheEnabled={true}
           thirdPartyCookiesEnabled={true}
