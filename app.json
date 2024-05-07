@@ -50,6 +50,17 @@
       "eas": {
         "projectId": "d2c7691c-f8b9-44a0-83b8-9459560697a7"
       }
-    }
+    },
+    "plugins": [
+      [
+        "react-native-vision-camera",
+        {
+          "cameraPermissionText": "Rymys LMS needs access to your Camera.",
+
+          "enableMicrophonePermission": true,
+          "microphonePermissionText": "Rymys LMS needs access to your Microphone."
+        }
+      ]
+    ]
   }
 }
